@@ -36,11 +36,23 @@ public class ImageSharingService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		long millisecs = (Long.parseLong(expireAt)) * 100;
+		long millisecs = (expireAtMilliSecs(expireAt));
 		imageSharing.setId(UUID.randomUUID().toString());
 		imageSharing.setDate(new Date(System.currentTimeMillis() + millisecs));
 
 		return repository.save(imageSharing).getId();
+	}
+
+	public long expireAtMilliSecs(String expireAt) {
+		long ans=0;
+		switch (expireAt) {
+			case "1" : ans = 300000;break;
+			case "2" : ans= 600000;break;
+			case "3" : ans= 1800000;break;
+			case "4" : ans= 3600000;break;
+			case "5" : ans= 10800000;break;
+		}
+		return ans;
 	}
 
 }

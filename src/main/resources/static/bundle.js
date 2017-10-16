@@ -72,6 +72,8 @@
 	      imgState: true
 	    };
 	    _this.uploadAction = _this.uploadAction.bind(_this);
+	    _this.select = _this.select.bind(_this);
+	    _this.uploadAnother = _this.uploadAnother.bind(_this);
 	    return _this;
 	  }
 	
@@ -81,7 +83,8 @@
 	      var self = this;
 	      var data = new FormData();
 	      var imagedata = document.querySelector('input[type="file"]').files[0];
-	      var expireAt = document.querySelector('input[type="text"]').value;
+	      var expireSelect = document.getElementById('expireselect');
+	      var expireAt = expireSelect.options[expireSelect.selectedIndex].value;
 	      data.append("image", imagedata);
 	      data.append("expireAt", expireAt);
 	
@@ -96,6 +99,16 @@
 	      xhr.send(data);
 	    }
 	  }, {
+	    key: 'select',
+	    value: function select() {
+	      document.getElementById('generatedURL').select();
+	    }
+	  }, {
+	    key: 'uploadAnother',
+	    value: function uploadAnother() {
+	      window.location.reload(true);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var imgState = this.state.imgState;
@@ -104,23 +117,93 @@
 	        null,
 	        imgState ? React.createElement(
 	          'form',
-	          { encType: 'multipart/form-data', action: '' },
-	          React.createElement('input', { type: 'file', name: 'image', defaultValue: 'image' }),
-	          React.createElement('input', { type: 'text', name: 'expireAt', defaultValue: '30' }),
-	          React.createElement('input', { type: 'button', value: 'upload', onClick: this.uploadAction.bind(this) })
+	          { className: 'form-horizontal', encType: 'multipart/form-data', action: '' },
+	          React.createElement(
+	            'div',
+	            { id: 'formbrowse', className: 'form-group row' },
+	            React.createElement(
+	              'label',
+	              { htmlFor: 'uploadedfile', className: 'control-label col-md-4' },
+	              'Select file : '
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'col-md-8' },
+	              React.createElement('input', { type: 'file', id: 'fileinput', name: 'uploadedfile', className: 'form-control' })
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { id: 'expire', className: 'form-group row' },
+	            React.createElement(
+	              'label',
+	              { htmlFor: 'expireselect', className: 'control-label col-md-4' },
+	              'Consume within:'
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'col-md-8' },
+	              React.createElement(
+	                'select',
+	                { name: 'expire', id: 'expireselect', className: 'form-control', defaultValue: '1' },
+	                React.createElement(
+	                  'option',
+	                  { value: '1' },
+	                  '5 Minutes'
+	                ),
+	                React.createElement(
+	                  'option',
+	                  { value: '2' },
+	                  '10 Minutes'
+	                ),
+	                React.createElement(
+	                  'option',
+	                  { value: '3' },
+	                  '30 Minutes'
+	                ),
+	                React.createElement(
+	                  'option',
+	                  { value: '4' },
+	                  '1 Hour'
+	                ),
+	                React.createElement(
+	                  'option',
+	                  { value: '5' },
+	                  '3 Hours'
+	                )
+	              )
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { id: 'formbottom', className: 'form-group' },
+	            React.createElement(
+	              'div',
+	              { className: 'col-md-8 ml-auto' },
+	              React.createElement('input', { type: 'button', id: 'uploadbtn', alt: 'submit', className: 'btn btn-success', value: 'Upload', onClick: this.uploadAction })
+	            )
+	          )
 	        ) : React.createElement(
 	          'div',
 	          null,
 	          React.createElement(
-	            'h4',
-	            null,
-	            this.state.imgStr
+	            'div',
+	            { className: 'form-group row' },
+	            React.createElement(
+	              'label',
+	              { htmlFor: 'generatedURL', className: 'col-md-2' },
+	              'URL : '
+	            ),
+	            React.createElement('input', { type: 'text', onClick: this.select, id: 'generatedURL', className: 'col-md-10', readOnly: 'readonly', value: 'http://localhost:8080/images/id/' + this.state.imgStr })
 	          ),
 	          React.createElement(
-	            'a',
-	            { href: 'http://localhost:8080/images/id/' + this.state.imgStr },
-	            'http://localhost:8080/images/id/',
-	            this.state.imgStr
+	            'div',
+	            { className: 'form-group row' },
+	            React.createElement(
+	              'div',
+	              { className: 'col-md-6 ml-auto' },
+	              React.createElement('input', { type: 'button', id: 'backbtn', alt: 'back', className: 'btn btn-success', value: 'Upload Another?', onClick: this.uploadAnother })
+	            )
 	          )
 	        )
 	      );
@@ -130,7 +213,7 @@
 	  return Form;
 	}(React.Component);
 	
-	ReactDOM.render(React.createElement(Form, null), document.getElementById('react'));
+	ReactDOM.render(React.createElement(Form, null), document.getElementById('pagecontent'));
 
 /***/ }),
 /* 1 */
