@@ -1,7 +1,8 @@
 node_modules/
 target/
 !.mvn/wrapper/maven-wrapper.jar
-src/main/resources/static/bundle.*
+src/main/resources/static/bundle.js
+src/main/resources/static/bundle.js.map
 
 ### STS ###
 .apt_generated

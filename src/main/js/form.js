@@ -60,7 +60,7 @@ render() {
                 <div id="formbrowse" className="form-group row">
                     <label htmlFor="uploadedfile" className="control-label col-md-4">Select file : </label>
                     <div className="col-md-8">
-                      <input type="file" id="fileinput" name="uploadedfile" className="form-control"></input>
+                      <input type="file" id="fileinput" name="uploadedfile" className="form-control" required="required"></input>
                     </div>
                 </div>
               <div id="expire" className="form-group row">
